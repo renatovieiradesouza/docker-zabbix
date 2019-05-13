@@ -1,6 +1,7 @@
 # Docker Zabbix
 
 ![Zabbix logo](https://assets.zabbix.com/img/logo/zabbix_logo_500x131.png)
+![Docker logo](https://www.mundodocker.com.br/wp-content/uploads/2015/06/docker_facebook_share.png)
 
 Docker Compose para Zabbix Web rodando em Docker. 
 
