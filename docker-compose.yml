@@ -1,0 +1,53 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    restart:
+      always
+    volumes:
+      - /docker/mysql/zabbix/data:/var/lib/mysql
+    environment:
+      - MYSQL_HOST=IP_HOST_MYSQL
+      - MYSQL_ROOT_PASSWORD=PASSWORD
+      - MYSQL_DATABASE=DATABASE
+      - MYSQL_USER=USER
+      - MYSQL_PASSWORD=OTHER_PASSWORD
+    ports:
+     - "3306:3306"
+
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:ubuntu-4.2-latest
+    restart:
+      always
+    ports:
+     - "10051:10051"
+    environment:
+      - MYSQL_ROOT_PASSWORD=PASSWORD
+      - DB_SERVER_HOST=IP_HOST_MYSQL
+      - DB_SERVER_PORT=3306
+      - MYSQL_USER=USER
+      - MYSQL_PASSWORD=OTHER_PASSWORD
+      - MYSQL_DATABASE=DATABASE
+    depends_on:
+      - mysql
+
+  zabbix-web:
+    image: zabbix/zabbix-web-apache-mysql:ubuntu-4.2-latest
+    restart:
+      always
+    ports:
+     - "80:80"
+    volumes:
+      - /docker/zabbix/ssl/file_certificado.crt:/etc/ssl/apache2/ssl.crt
+      - /docker/zabbix/ssl/file_certificado.key:/etc/ssl/apache2/ssl.key
+    environment:
+      - DB_SERVER_HOST=IP_HOST_MYSQL
+      - DB_SERVER_PORT=3306
+      - MYSQL_USER=USER
+      - MYSQL_PASSWORD=OTHER_PASSWORD
+      - MYSQL_DATABASE=DATABASE
+      - ZBX_SERVER_HOST=IP_HOST_MYSQL
+      - PHP_TZ=America/Sao_Paulo
+    depends_on:
+      - mysql
+      - zabbix-server
