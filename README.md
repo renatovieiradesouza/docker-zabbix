@@ -38,18 +38,18 @@ ports:
 ```
 service:
   zabbix-agent:
-  image: zabbix/zabbix-agent:ubuntu-4.2-latest
-  restart:
-    always
-  ports:
-    - "10050:10050"
-  hostname:NOME_HOST_AQUI
-  networks:host
-  privileged:true
-  volumes:
-    - /:/rootfs
-    - /var/run:/var/run
-  environment:
-    - ZBX_HOSTNAME="$(hostname)"
-    - ZBX_SERVER_HOST="IP_OU_NOME_DNS_ZABBIX_SERVER"
+    image: zabbix/zabbix-agent:ubuntu-4.2-latest
+    restart:
+      always
+    ports:
+      - "10050:10050"
+    hostname:NOME_HOST_AQUI
+    networks:host
+    privileged:true
+    volumes:
+      - /:/rootfs
+      - /var/run:/var/run
+    environment:
+      - ZBX_HOSTNAME="$(hostname)"
+      - ZBX_SERVER_HOST="IP_OU_NOME_DNS_ZABBIX_SERVER"
 ```
